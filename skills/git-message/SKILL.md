@@ -18,52 +18,21 @@ staged changes.
 **`NOTE`:** _Use this skill only for generating a commit message, but
 not for making commits._
 
-## References
-
-The following reference file serves as a strict guideline to study when
-drafting and formatting the commit message.
-
-Locate the reference file in the `references` folder.
-
-- **`references/conventional-commit.md`**: _The abridged summary of the
-  conventional commit specification._
-
-**`ALWAYS`** study the reference file before crafting a commit message.
-
 ## Primary directives
 
 Follow these rules when crafting, formatting, and presenting the commit
 message:
 
-### Content & style directives
-
+- **`ALWAYS`** study `references/conventional-commit.md` before
+  drafting.
 - Aim for brevity and precision, but don't sacrifice clarity.
-- Use bullet points to list changes.
-- Optionally, precede the list of changes with a briefly summarized
-  paragraph of "why" the changes occurred.
-
-### Character limit directives
-
-Strictly adhere to these limits to ensure readability in git logs:
-
-- **Subject Line:** ≤50 characters recommended (Hard limit: 72)
-- **Body Lines:** Wrap at 72 characters
-- **Footer:** Wrap at 72 characters
-
-### Formatting directives
-
-- Use plain text, not markdown, for the commit messages.
-- Don't use **`BACKTICKS`** or code blocks in the commit message.
-- Don't use or show line numbers.
-- Strictly follow the character limits per line, according to the
-  `kbase` reference files.
-- Respect `git` line length limits, according to the `kbase` reference
-  files.
-
-#### Avoid backticks
-
-**`NOTE:`** _Avoid using **`BACKTICKS`** in commit messages. They can
-cause shell errors. Use single or double quotes instead._
+- Use bullet points to list changes; optionally precede with brief "why"
+  summary.
+- **Character limits:** Subject ≤50 chars (hard limit: 72); body/footer
+  wrap at 72.
+- Use plain text, not markdown. **`NEVER`** use backticks (causes shell
+  errors).
+- Don't use line numbers or code blocks.
 
 ### Presentation directives
 
@@ -74,28 +43,16 @@ cause shell errors. Use single or double quotes instead._
 
 ### Confirmation directives
 
-_After_ presenting the commit message:
+_After_ presenting the commit message, offer 4 options:
 
-- Explicitly prompt for a `yes` or `no` confirmation from the user in
-  the agent's direct response;
-- Stop all processes and halt execution;
-- If the user responds with `yes` or an affirmative, proceed with the
-  commit;
-- If the user responds with `no`, `cancel`, or a negative, halt the
-  commit process and await further instructions;
-- Ensure the prompt for confirmation concisely states that the next
-  action performs the commit _if_ approved.
+1. **Approve and commit** - Proceed with commit
+2. **Edit staged files** - `Unstage` and return to staging
+3. **Regenerate message** - Generate new message
+4. **Abort commit process** - Cancel workflow
 
 ## Git directives
 
-Use the `git` commands below to:
-
-- Get a comprehensive understanding of the changes in the project;
-- Get the status of the repository.
-
-**`NOTE`:** _The `git diff` commands should always use the `--no-pager`
-option and `--no-ext-diff` flag to ensure the use of the standard `diff`
-and `pager` tools._
+Git commands (use `--no-pager` and `--no-ext-diff` for diffs):
 
 ### For staged changes
 
@@ -117,43 +74,45 @@ git --no-pager diff --no-ext-diff --stat --minimal --patience --histogram \
 git status --porcelain=v2 --branch
 ```
 
-## Efficient analysis directives
+## Efficiency directives
 
-Maximize efficiency and reduce token usage:
+- Batch git operations on all files simultaneously, avoid individual
+  file processing
+- Use parallel execution when possible
+- Reduce token usage
 
-- **Batch processing**: execute git operations, like `git diff`, on all
-  file simultaneously. Avoid individual file operations.
-- **Parallel processing**: if possible, execute operations
-  simultaneously and/or in parallel.
-- Optimize all responses, outputs, communications, and operations for
-  context size and token efficiency.
+## Task management
 
-## Task management directives
-
-For complex tasks, use your `todo` management system to:
-
-- Break down, plan, revise, and streamline tasks;
-- Maintain internal task state;
-- Remove unnecessary and redundant operations;
-- Optimize tool usage and workflow to fulfill the goal.
+For complex tasks: use `todo` system to break down, plan, and optimize
+workflow.
 
 ---
 
 ## Workflow
 
-- **`References`:** Study the reference files.
-- **`Analyze`:** Using the `git directives`, study the staged changes
-  for summarization.
-- **`Draft`:** Strictly following the guidelines in
-  `references/conventional-commit.md` and the directives, write and
-  format the complete commit message.
-- **`VERIFY`:** Ensure the commit message adheres to formatting rules
-  and the guidelines in the reference files. Also ensure **`NO`**
-  `BACKTICKS` in commit message.
-- **`Propose`:** Strictly following the directives, present the
-  formatted commit message to the user.
-- **`Confirm`:** Strictly following the directives, prompt for
-  confirmation from the user.
-- **`Halt`:** Stop all processes and halt execution;
-- **`Await`:** Await the user's response before taking any further
-  action.
+1. Study `references/conventional-commit.md`
+2. Analyze staged changes via git directives
+3. Draft and format complete commit message
+4. Verify formatting rules and **NO BACKTICKS**
+5. Present message and prompt for confirmation with 4 options
+6. Await user response before further action
+
+## Output
+
+**Files created:**
+
+- None (message generation only)
+
+**Status communication:**
+
+First line of output indicates user's decision:
+
+- `APPROVED: [commit message follows]` - user approved message
+- `REJECTED_EDIT_FILES: user wants to modify staged files` - User wants
+  to re-stage
+- `REJECTED_REGENERATE: user wants new message` - User wants message
+  regenerated
+- `REJECTED_ABORT: user cancelled commit` - User aborted process
+- `ERROR: [message]` - Failed to generate message
+
+**Following lines (when APPROVED):** complete commit message text

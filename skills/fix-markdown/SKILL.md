@@ -8,11 +8,14 @@ description:
 
 # Agent protocol: Fix markdown file
 
-**Goal:** Use `prettier` and `vale` to fix lint, formatting, and prose
-issues with the target markdown files.
+**`GOAL`**: use prettier and vale to fix lint, formatting, and prose
+issues in markdown files.
 
-**When:** Use when the user or agent needs to fix lint, formatting, or
-improve the prose of markdown files.
+**`WHEN`**: use when the user or agent needs to fix lint, formatting, or
+improve prose in markdown files.
+
+**`NOTE`**: strictly follow E-Prime directive (avoid "`to be`" verbs)
+when writing or correcting prose.
 
 ## References
 
@@ -26,119 +29,65 @@ Locate the reference files in the `references` folder.
 
 ## Primary directives
 
-Follow these rules when processing the markdown file:
+### Formatting and linting sequence
 
-### Editing directives
+- **Format first & last**: Always run prettier before analysis and after
+  edits
+- **E-Prime compliance**: Strictly follow
+  `references/e-prime-directive.md` when writing/correcting prose
+- **Vale cycle**: Run vale iteratively (lint → fix → verify) until no
+  issues remain
+- **Research complex issues**: Use search tools or Perplexity for
+  unfamiliar lint problems
 
-- **`Format First & Last:`** Always format the document before starting
-  analysis and after finishing all edits.
-- **`Rewrite Freely:`** Feel free to rewrite phrases to simplify
-  structure, fix style issues, or address grammatical violations.
-- **`E-Prime Compliance:`** Strictly follow the E-Prime directive when
-  writing, updating, or correcting prose.
-- **`Research:`** Use the search tool or `Perplexity` to research
-  solutions if you encounter a complex lint issue.
+### Tool commands
 
-### Tool directives
+- Format: `prettier --write <file_path>`
+- Sync rules: `vale sync`
+- Lint: `vale --no-wrap --output=JSON <file_path>`
 
-Use the commands below to manage formatting and linting.
+### Vale fixing guidelines
 
-**To format the file:**
+- **Path wrapping**: Wrap filenames, `URIs`, `URLs`, and paths in
+  backticks
+- **Context awareness**: Check line numbers - issues may appear as
+  `substrings` in technical terms
+- **False positives**: Wrap acronyms, names, and proper nouns in
+  backticks
+- **Headings**: Use sentence case (capitalize first character only)
+- **Passive voice**: Follow E-Prime directive to remove "`to be`" verbs
+- **Follow hints**: Use Vale's issue links when needed
 
-```bash
-prettier --write <file_path>
-```
+## Efficiency directives
 
-**To sync lint rules:**
+- Batch operations on file groups, avoid individual file processing
+- Use parallel execution when possible
+- Target only requested files
+- Reduce token usage in all operations
 
-```bash
-vale sync
-```
+## Task management
 
-**To find lint issues:**
-
-```bash
-vale --no-wrap --output=JSON <file_path>
-```
-
-### Vale directives
-
-Repeat the following cycle to address prose issues:
-
-1. Run `vale` against the file in question.
-2. Select issues to address.
-3. Analyze the issue and plan a fix.
-4. Fix the issue in the file.
-5. Run `vale` again to verify the fix or find the next issue.
-6. Repeat steps 1-5 until **`NO`** issues remain.
-7. Execute the _Vale path directives_.
-
-#### Vale path directives
-
-Always wrap the following inside backticks:
-
-- `Filenames`;
-- `Uris`;
-- `Urls`; and
-- `Paths`, both relative and full;
-
-For example:
-
-```markdown
-- `filename.md`
-- `https://example.com`
-- `/path/to/file`
-```
-
-#### Addressing common lint issues
-
-- **`Filenames and Paths:`** Wrap all filenames, `uris`, `urls`, and
-  paths, both relative and full, inside backticks.
-- **`Context Awareness:`** Check the reported line number. The flagged
-  issue might represent part of a hyphenated word or a `substring`
-  within a technical term (for example, `LLM` inside `vLLM`).
-- **`False Positives:`** Wrap words in backticks to fix false-positive
-  spelling issues, acronyms, abbreviations, names, and proper nouns.
-  Treat tool names containing acronyms as proper nouns.
-- **`Headings:`** Capitalize only the first character in a heading to
-  fix standard capitalization issues (Sentence case).
-- **`Passive Voice:`** Follow the E-Prime directive to fix `to be` and
-  passive voice issues.
-- **`Follow Hints`:** Optionally, vale provides a link associated with
-  an issue. Follow the link if needed for hints on how to fix the issue.
-
-## Efficient analysis directives
-
-Maximize efficiency and reduce token usage:
-
-- **Batch processing**: Execute operations on file groups
-  simultaneously. Avoid individual file operations.
-- **Parallel processing**: if possible, execute operations
-  simultaneously and/or in parallel.
-- **Targeted analysis**: Focus only on the specific file or files
-  requested.
-- Optimize all responses, outputs, communications, and operations for
-  context size and token efficiency.
-
-## Task management directives
-
-For complex tasks, use your `todo` management system to:
-
-- Break down, plan, revise, and streamline tasks;
-- Maintain internal task state;
-- Remove unnecessary and redundant operations;
-- Optimize tool usage and workflow to fulfill the goal.
-
----
+For complex tasks: use `todo` system to break down, plan, and optimize
+workflow.
 
 ## Workflow
 
-- **`Sync`:** Run `vale sync` to update local lint rules.
-- **`Format`:** Run `prettier --write` to ensure a clean baseline.
-- **`Path Fixes`:** Study the file, then execute the _Vale path
-  directives_.
-- **`Lint & Fix`:** Iteratively run `vale`, analyze issues, and apply
-  fixes according to the **Vale directives**.
-- **`Final Format`:** Run `prettier --write` again to ensure consistent
-  formatting after edits.
-- **`Halt`:** Stop all processes and halt execution.
+- Run `vale sync` to update lint rules
+- Run `prettier --write` for baseline formatting
+- Study file and apply Vale path directives (wrap all paths/filenames in
+  backticks)
+- Iteratively run `vale`, fix issues, and verify until no issues remain
+- Run `prettier --write` for final formatting
+- **`DONE`**
+
+## Output
+
+**Files modified:**
+
+- Target markdown files - Formatted and lint-free
+
+**Status communication:**
+
+- Reports number of issues fixed
+- Confirms Vale shows zero remaining issues
+- Lists file paths processed

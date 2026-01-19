@@ -6,58 +6,98 @@ description:
   "git-message" skills to perform the commit.
 ---
 
-# Agent protocol: Commit changes in the git repository
+# Commit changes in the git repository
 
-**Goal:** Use the `git-add` and `git-message` skills to commit changes
+**`GOAL`**: use the `git-add` and `git-message` skills to commit changes
 in the repository and clean it.
 
-**When:** Use when the user or agent needs to commit changes in the
+**`WHEN`**: use when the user or agent needs to commit changes in the
 repository.
 
 **`NOTE`:** _Await user approval of commit messages before committing.
 Make commits only after the user has approved the commit message._
 
-## Commit process
-
-1. Use the `git-add` skill to autonomously stage selected files.
-2. Use the `git-message` skill to generate a commit message.
-3. Halt and await user approval for the commit message.
-4. Upon approval, commit staged changes using the commit message.
-
-### Commit process loop
-
-- Repeat the commit process, steps 1-4, until you commit all changes,
-  and clean the repository.
-- Immediately halt and abort all processes if the user doesn't approve a
-  commit message.
-
-## Repository status
-
-After committing all changes and cleaning the repository, use the
-`git-status` skill to present the status of the repository to the user.
-
-## Efficient analysis directives
-
-Maximize efficiency and reduce token usage:
-
-- **Batch processing**: Execute operations on file groups
-  simultaneously. Avoid individual file operations.
-- **Parallel processing**: if possible, execute operations
-  simultaneously and/or in parallel.
-- **Targeted analysis**: Focus only on the specific file or files
-  requested.
-- Optimize all responses, outputs, communications, and operations for
-  context size and token efficiency.
-
 ## Workflow
 
-- Perform the commit process:
-  - Stage files using the `git-add` skill.
-  - Generate a commit message using the `git-message` skill.
-  - Halt and await user approval for the commit message.
-  - Commit staged changes using the commit message.
-- Repeat the commit process until you clean the repository.
-- Halt and abort all processes if the user doesn't approve the commit
-  message.
-- Use the `git-status` skill to present the status of the repository
+Follow these steps in sequence:
+
+### Step 1: Check for changes
+
+- Run `git status --porcelain=v2` to verify repository has changes.
+- If no changes: Skip to Step 6 (report clean repository).
+- If changes exist: Continue to Step 2.
+
+### Step 2: Stage atomic changes
+
+- Invoke the `git-add` skill to stage a cohesive set of files.
+- Capture the status from skill output (`SUCCESS`, `WARN`, or `ERROR`).
+- Handle the status:
+  - If `ERROR`: Halt and report the error to the user.
+  - If `WARN` (no files available): Skip to Step 6.
+  - If `SUCCESS` (files staged): Continue to Step 3.
+
+### Step 3: Generate commit message and await approval
+
+- Invoke the `git-message` skill to generate a commit message.
+- Capture the status from skill output (`APPROVED`,
+  `REJECTED_EDIT_FILES`, `REJECTED_REGENERATE`, `REJECTED_ABORT`, or
+  `ERROR`).
+- Handle the status:
+  - If `ERROR`: Halt and report the error to the user.
+  - If `APPROVED`: Continue to Step 4.
+  - If `REJECTED_EDIT_FILES`: `Unstage` all files with
+    `git restore --staged .`, then loop back to Step 2.
+  - If `REJECTED_REGENERATE`: Loop back to Step 3.
+  - If `REJECTED_ABORT`: Halt and report abort to the user.
+
+### Step 4: Commit changes
+
+- Execute `git commit` with the approved message.
+- If success: report the commit `SHA` and continue to Step 5.
+- If failure: Halt and report the error to the user.
+
+### Step 5: Check for more commits (automatic loop control)
+
+- Run `git status --porcelain=v2` to check for remaining changes.
+- If no changes: Continue to Step 6.
+- If changes remain: automatically loop back to Step 2 (no user prompt
+  needed).
+
+### Step 6: Present final status
+
+- Invoke the `git-status` skill to present repository state.
+- Report summary: number of commits created and final repository state.
 - **`DONE`**
+
+## Output
+
+**Files created:**
+
+- Git commits in repository history
+
+**Status communication:**
+
+Reports the following at each step:
+
+- **Step 1:** Repository state (initial check)
+- **Step 2:** Staging status from `git-add` skill (`SUCCESS`, `WARN`, or
+  `ERROR`)
+- **Step 3:** User's message approval choice (`APPROVED`,
+  `REJECTED_EDIT_FILES`, `REJECTED_REGENERATE`, `REJECTED_ABORT`, or
+  `ERROR`)
+- **Step 4:** Commit `SHA` or error message
+- **Step 5:** Automatic loop detection (internal check, minimal output
+  to user)
+- **Step 6:** Final repository status and session summary
+
+## Efficiency directives
+
+- Batch operations on file groups, avoid individual file processing
+- Use parallel execution when possible
+- Target only relevant files
+- Reduce token usage
+
+## Task management
+
+For complex tasks: use `todo` system to break down, plan, and optimize
+workflow.
