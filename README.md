@@ -34,6 +34,21 @@ and `update-changelog` skills. If unsure, configure `vale` with the
 
 The Git skills require `git` installed on your machine.
 
+### Install skills
+
+Locate your configuration folder. For `Gemini CLI`, use `~/.gemini`. For
+`Claude Code`, use `~/.claudie`.
+
+Then place the `skills` folder from this project in your configuration
+folder.
+
+### Optionally, install custom commands
+
+The custom commands in this project only work for `Gemini CLI`. Place
+the `commands` folder in your configuration folder for `Gemini CLI`. In
+`Claude Code`, skills behave just like commands, eliminating the need to
+install custom commands.
+
 ---
 
 ## Using commands to invoke skills
