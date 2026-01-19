@@ -91,7 +91,9 @@ processed commits.
 **See:**
 [`skills/update-changelog/SKILL.md`](skills/update-changelog/SKILL.md)
 
-### Key principles
+---
+
+## Key principles
 
 - **Single responsibility** - Each skill performs one task well
 - **`Composability`** - `Orchestrators` coordinate sub-skills
