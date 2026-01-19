@@ -1,0 +1,2 @@
+description = "Fix formatting and prose in a markdown file"
+prompt = "Use the `fix-markdown` skill to fix formatting and prose in the following markdown files: `{{args}}`"

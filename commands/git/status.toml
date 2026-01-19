@@ -1,0 +1,2 @@
+description = "Provides a quick, visually rich overview of your git workspace."
+prompt = "Use the `git-status` skill to present the status of the repository."

@@ -1,0 +1,2 @@
+description = "Update the changelog with latest commits"
+prompt = "Use the `update-changelog` skill to orchestrate the complete changelog update workflow."

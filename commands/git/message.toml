@@ -1,0 +1,2 @@
+description = "Fix commit message"
+prompt = "Use the `git-message` skill to generate a commit message."

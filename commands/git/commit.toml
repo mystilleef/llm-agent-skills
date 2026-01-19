@@ -1,0 +1,2 @@
+description = "Commit staged files"
+prompt = "Use the `git-commit` skill to perform a git commit."
