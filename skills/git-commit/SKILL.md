@@ -66,7 +66,6 @@ Follow these steps in sequence:
 ### Step 6: Present final status
 
 - Invoke the `git-status` skill to present repository state.
-- Report summary: number of commits created and final repository state.
 - **`DONE`**
 
 ## Efficiency directives

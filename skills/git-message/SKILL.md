@@ -50,6 +50,9 @@ _After_ presenting the commit message, offer 4 options:
 3. **Regenerate message** - Generate new message
 4. **Abort commit process** - Cancel workflow
 
+Make option 1 the default response. Assume "Approve and commit" if the
+user gives an empty response.
+
 ## Git directives
 
 Git commands (use `--no-pager` and `--no-ext-diff` for diffs):
