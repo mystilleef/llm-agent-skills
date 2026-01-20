@@ -64,6 +64,7 @@ Locate the reference files in the `references` folder.
 - Use parallel execution when possible
 - Target only requested files
 - Reduce token usage in all operations
+- Optimize all operations for token and context size
 
 ## Task management
 

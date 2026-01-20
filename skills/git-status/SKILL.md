@@ -22,6 +22,7 @@ to display the status of the repository to the user.
 - Use parallel execution when possible
 - Target only relevant files
 - Reduce token usage
+- Optimize all operations for token and context size
 
 ## Task management
 

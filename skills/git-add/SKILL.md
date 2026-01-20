@@ -69,6 +69,7 @@ git add <file1> <file2> ...
 - Analyze tracked files via `git diff`; read non-ignored `untracked`
   files; omit ignored files
 - Reduce token usage
+- Optimize all operations for token and context size
 
 ## Task management
 

@@ -18,8 +18,10 @@ templates and patterns only.**
 3. [Git commands](#3-git-commands) - Standard commands and constraints
 4. [Status codes](#4-status-codes) - Status conventions and examples
 5. [Script patterns](#5-script-patterns) - Scripts vs prompts guidance
-6. [Anti-pattern rules](#6-anti-pattern-rules) - Common mistakes to avoid
-7. [Domain cheat sheets](#7-domain-cheat-sheets) - Markdown, Changelog, Git
+6. [Anti-pattern rules](#6-anti-pattern-rules) - Common mistakes to
+   avoid
+7. [Domain cheat sheets](#7-domain-cheat-sheets) - Markdown, Changelog,
+   Git
 8. [Quick reference map](#8-quick-reference-map) - Cross-reference table
 
 ---
@@ -100,6 +102,7 @@ description:
 - Use parallel execution when possible
 - Target only relevant files
 - Reduce token usage
+- Optimize all operations for token and context size
 ```
 
 ### 2.4 Task management

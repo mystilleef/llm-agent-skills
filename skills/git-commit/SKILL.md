@@ -73,6 +73,7 @@ Follow these steps in sequence:
 - Use parallel execution when possible
 - Target only relevant files
 - Reduce token usage
+- Optimize all operations for token and context size
 
 ## Task management
 

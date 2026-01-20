@@ -83,6 +83,7 @@ git status --porcelain=v2 --branch
   file processing
 - Use parallel execution when possible
 - Reduce token usage
+- Optimize all operations for token and context size
 
 ## Task management
 
