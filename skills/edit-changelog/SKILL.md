@@ -1,107 +1,55 @@
 ---
 name: edit-changelog
-description:
-  Edit changelog using git commit history. Use when the agent needs to
-  edit the changelog.
+description: Edit changelog using git commit history via script.
 ---
 
 # Edit changelog
 
-Generate changelog entries from git commit history then update
+**`GOAL`**: generate changelog entries from git history and update
 `CHANGELOG.md`.
 
-## Purpose
+**`WHEN`**: the agent needs to update the changelog with recent commits.
 
-This skill dynamically generates changelog entries from git commits:
+**`NOTE`**: requires `CHANGELOG.md` and `.last-aggregated-commit`
+(auto-initialized).
 
-- Tracks last processed commit via `.last-aggregated-commit` pointer in
-  repository root
-- Queries git for new commits since last run
-- Parses conventional commit messages
-- Categorizes changes into Keep a Changelog sections
-- `Deduplicates` by issue number
-- Updates `CHANGELOG.md`
+## Efficiency directives
 
-## When to use
-
-Invoke this skill when the agent needs to update the changelog.
-
-**Prerequisites:**
-
-- `CHANGELOG.md` exists (invoke `init-changelog` first if missing)
-- The project requires a git repository
-- `.last-aggregated-commit` pointer exists (auto-initialized on first
-  run)
-
-**Behavior:**
-
-- Processes only conventional commit format (`feat:`, `fix:`, etc.)
-- Skips non-conventional commits
-- Overwrites manual edits in Unreleased section
-- Preserves manual edits in versioned sections
+- Optimize all operations for token and context efficiency
+- Batch operations on file groups, avoid individual file processing
+- Target only relevant files
+- Reduce token usage
 
 ## Workflow
 
 - Run `scripts/edit-changelog.sh`
-- Verify `CHANGELOG.md` section updates
-- Communicate success or failure to user
-
-### Logic overview
-
-The script performs the following steps:
-
-1. **Verify prerequisites**: Checks for `CHANGELOG.md` and git
-   repository.
-2. **Read last aggregated commit**: Reads or bootstraps the
-   `.last-aggregated-commit` pointer.
-3. **Get new commits**: Queries `git log` for commits since the last
-   run.
-4. **Parse and categorize**: Parses Conventional Commits, filters types,
-   and `deduplicates` by issue number.
-5. **Reconstruct `CHANGELOG.md`**: Preserves header/history and inserts
-   the new `[Unreleased]` section.
-6. **Update pointer**: Updates `.last-aggregated-commit` to `HEAD`.
+- Capture status from first line of output
+- Handle the status:
+  - If `ERROR`: Stop and report to user
+  - If `WARN`: Report no changes needed
+  - If `SUCCESS`: Report success with entry count
+- **`DONE`**
 
 ## Output
 
 **Files modified:**
 
-- `CHANGELOG.md` - Unreleased section regenerated with new entries
-- `.last-aggregated-commit` - Updated to current `HEAD`
+- `CHANGELOG.md` - Unreleased section updated
+- `.last-aggregated-commit` - Updated to `HEAD`
 
 **Status communication:**
 
-- Exit code `0`: Success or warning (no new commits)
-- Exit code `1`: Failure (missing prerequisites)
+First line of output indicates status:
 
-**`Stdout` format:** first line contains status:
-
-- `SUCCESS: Changelog updated with N new entries`
-- `WARN: No new commits to process`
-- `ERROR: CHANGELOG.md doesn't exist. Run 'init-changelog' first`
+- `SUCCESS: [message]` - Operation completed with changes
+- `WARN: [message]` - Operation completed but no changes needed
+- `ERROR: [message]` - Operation failed
 
 ## References
 
-See reference files for detailed specifications:
+The following reference files serve as strict guidelines:
 
-- `references/keep-a-changelog-spec.md` - Keep a Changelog format
-  specification
-- `references/changelog-templates.md` - Template variations and examples
-- `references/changelog-structure.md` - Changelog structure
-  documentation
-- `references/aggregation-patterns.md` - Git-based aggregation patterns
-
-## Success criteria
-
-**Successful run:**
-
-- ✓ Processes commits since last aggregation
-- ✓ Updates `CHANGELOG.md` with categorized entries
-- ✓ Updates `.last-aggregated-commit` pointer to `HEAD`
-- ✓ `Deduplicates` entries by issue number
-
-**Graceful exit without changes:**
-
-- No new commits since last run
-- Pointer missing (initializes and exits)
-- Pointer corrupted (`reinitializes` and exits)
+- **`references/keep-a-changelog-spec.md`**: Format specification
+- **`references/changelog-templates.md`**: Template variations
+- **`references/changelog-structure.md`**: Structure documentation
+- **`references/aggregation-patterns.md`**: Aggregation patterns

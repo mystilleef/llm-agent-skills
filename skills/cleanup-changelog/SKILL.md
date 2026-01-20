@@ -1,26 +1,35 @@
 ---
 name: cleanup-changelog
-description:
-  Use the `fix-markdown` skill to clean up CHANGELOG.md, then remove
-  headers with empty sections. Use after the agent has finished
-  generating or updating the changelog.
+description: Format changelog and remove empty sections.
 ---
 
 # Cleanup changelog
 
-**`GOAL`**: fix lint, formatting, and prose issues in `CHANGELOG.md`.
+**`GOAL`**: fix formatting and remove empty sections in `CHANGELOG.md`.
 
-**`WHEN`**: use after the agent has finished generating or updating the
-changelog.
+**`WHEN`**: after generating or updating the changelog.
 
-## Remove empty headers script
+## Efficiency directives
 
-Run the `scripts/remove-empty-headers.sh` script against `CHANGELOG.md`
-to remove headers with empty sections.
+- Optimize all operations for token and context efficiency
+- Batch operations on file groups, avoid individual file processing
+- Target only relevant files
+- Reduce token usage
 
 ## Workflow
 
-- Use the `fix-markdown` skill to fix `CHANGELOG.md`
-- Run the script to remove headers with empty sections in `CHANGELOG.md`
-- Run `fix-markdown` skill again to ensure proper formatting
+- Invoke the `fix-markdown` skill on `CHANGELOG.md`
+- Run `scripts/remove-empty-headers.sh CHANGELOG.md`
+- Invoke the `fix-markdown` skill on `CHANGELOG.md` again
 - **`DONE`**
+
+## Output
+
+**Files modified:**
+
+- `CHANGELOG.md` - Formatted and cleaned
+
+**Status communication:**
+
+- `SUCCESS` - Cleanup completed
+- `ERROR` - Operation failed
