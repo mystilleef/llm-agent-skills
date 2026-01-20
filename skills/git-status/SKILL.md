@@ -1,9 +1,9 @@
 ---
 name: git-status
 description:
-  Present the status of the git repository to the user. Use when the
-  agent needs to display the status of the git repository to the user.
-  The agent should not use this internally for its own needs.
+  Present the status of the git repository to the user. Use to display
+  the status of the repository after a successful git commit by the
+  agent. The agent should not use this internally for its own needs.
 ---
 
 # Present git status
@@ -11,8 +11,8 @@ description:
 **`GOAL`**: present the git status in a visually appealing and
 consistent way.
 
-**`WHEN`**: use when the agent needs to display the status of the
-repository to the user.
+**`WHEN`**: use after a successful git commit by the agent when it needs
+to display the status of the repository to the user.
 
 **`NOTE`**: _The agent shouldn't use this internally for its own needs._
 
