@@ -47,8 +47,10 @@ The following reference files serve as strict guidelines:
 
 ## Workflow
 
-- Execute `git status` command
-- Study `references/git-status-codes.md`
-- Study `references/git-status-presentation.md`
+**`IMPORTANT`**: _To avoid a recursive loop, **`DON'T`** invoke the
+`git-status` skill here._
+
+- Without using the `git-status` skill, get repository status
+- Study the reference files
 - Present final status to user
 - **`DONE`**
