@@ -24,7 +24,7 @@ and remain optional - Claude Code uses skills directly.
 
 Skills follow a consistent structure:
 
-```
+```bash
 skills/<skill-name>/
   ├── SKILL.md           # Skill definition and protocol
   ├── references/        # Supporting documentation
