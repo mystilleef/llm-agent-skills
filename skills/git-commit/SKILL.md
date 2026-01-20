@@ -2,14 +2,14 @@
 name: git-commit
 description:
   Commit changes in the repository. Use when the user or agent needs to
-  commit changes in the repository. Employs the "git-add" and
-  "git-message" skills to perform the commit.
+  commit changes in the repository. Employs the "git-add",
+  "git-message", and "git-status" skills to perform the commit.
 ---
 
 # Commit changes in the git repository
 
-**`GOAL`**: use the `git-add` and `git-message` skills to commit changes
-in the repository and clean it.
+**`GOAL`**: use the `git-add`, `git-message` and `git-status` skills to
+commit changes in the repository and clean it.
 
 **`WHEN`**: use when the user or agent needs to commit changes in the
 repository.
@@ -68,27 +68,6 @@ Follow these steps in sequence:
 - Invoke the `git-status` skill to present repository state.
 - Report summary: number of commits created and final repository state.
 - **`DONE`**
-
-## Output
-
-**Files created:**
-
-- Git commits in repository history
-
-**Status communication:**
-
-Reports the following at each step:
-
-- **Step 1:** Repository state (initial check)
-- **Step 2:** Staging status from `git-add` skill (`SUCCESS`, `WARN`, or
-  `ERROR`)
-- **Step 3:** User's message approval choice (`APPROVED`,
-  `REJECTED_EDIT_FILES`, `REJECTED_REGENERATE`, `REJECTED_ABORT`, or
-  `ERROR`)
-- **Step 4:** Commit `SHA` or error message
-- **Step 5:** Automatic loop detection (internal check, minimal output
-  to user)
-- **Step 6:** Final repository status and session summary
 
 ## Efficiency directives
 

@@ -3,6 +3,7 @@ name: git-status
 description:
   Present the status of the git repository to the user. Use when the
   agent needs to display the status of the git repository to the user.
+  The agent should not use this internally for its own needs.
 ---
 
 # Present git status
@@ -10,11 +11,10 @@ description:
 **`GOAL`**: present the git status in a visually appealing and
 consistent way.
 
-**`WHEN`**: the user requests the repository status or the agent needs
-to show it.
+**`WHEN`**: use when the agent needs to display the status of the
+repository to the user.
 
-**`NOTE`**: use this skill **only** to present the status to the user.
-Avoid internal state analysis.
+**`NOTE`**: _The agent shouldn't use this internally for its own needs._
 
 ## Efficiency directives
 
