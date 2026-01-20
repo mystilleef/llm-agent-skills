@@ -69,11 +69,11 @@ Follow these steps in sequence:
 
 ## Efficiency directives
 
+- Optimize all operations for token and context efficiency
 - Batch operations on file groups, avoid individual file processing
 - Use parallel execution when possible
 - Target only relevant files
 - Reduce token usage
-- Optimize all operations for token and context size
 
 ## Task management
 

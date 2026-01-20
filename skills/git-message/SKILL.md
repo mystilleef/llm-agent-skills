@@ -79,11 +79,11 @@ git status --porcelain=v2 --branch
 
 ## Efficiency directives
 
+- Optimize all operations for token and context efficiency
 - Batch git operations on all files simultaneously, avoid individual
   file processing
 - Use parallel execution when possible
 - Reduce token usage
-- Optimize all operations for token and context size
 
 ## Task management
 

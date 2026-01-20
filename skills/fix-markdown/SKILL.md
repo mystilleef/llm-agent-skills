@@ -60,11 +60,11 @@ Locate the reference files in the `references` folder.
 
 ## Efficiency directives
 
+- Optimize all operations for token and context efficiency
 - Batch operations on file groups, avoid individual file processing
 - Use parallel execution when possible
 - Target only requested files
 - Reduce token usage in all operations
-- Optimize all operations for token and context size
 
 ## Task management
 

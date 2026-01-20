@@ -62,6 +62,7 @@ git add <file1> <file2> ...
 
 ## Efficiency directives
 
+- Optimize all operations for token and context efficiency
 - Single-file shortcut: If one tracked `unstaged` file, stage
   immediately (skip reference study)
 - Batch git operations on file groups, avoid individual file processing
@@ -69,7 +70,6 @@ git add <file1> <file2> ...
 - Analyze tracked files via `git diff`; read non-ignored `untracked`
   files; omit ignored files
 - Reduce token usage
-- Optimize all operations for token and context size
 
 ## Task management
 
