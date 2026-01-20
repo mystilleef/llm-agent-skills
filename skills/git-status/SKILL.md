@@ -48,7 +48,7 @@ The following reference files serve as strict guidelines:
 ## Workflow
 
 - Execute `git status` command
-- Study `git-status-codes.md`
-- Study `git-status-presentation.md`
+- Study `references/git-status-codes.md`
+- Study `references/git-status-presentation.md`
 - Present final status to user
 - **`DONE`**
