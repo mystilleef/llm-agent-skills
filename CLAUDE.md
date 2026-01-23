@@ -1,4 +1,4 @@
-# Claude.md
+# CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working
 with code in this repository.
@@ -16,43 +16,60 @@ CLI and Claude Code. The architecture emphasizes:
 - **References for depth**: Include supporting documentation where
   needed
 
-You can install skills in `~/.gemini` (Gemini CLI) or `~/.claudie`
+You can install skills in `~/.gemini` (Gemini CLI) or `~/.claude`
 (Claude Code) for global use. Commands provide Gemini-specific wrappers
 and remain optional - Claude Code uses skills directly.
 
 ## Skill architecture
 
-Skills follow a consistent structure:
+All skills follow a standardized structure per
+`docs/skill-reference-guide.md`:
 
 ```bash
 skills/<skill-name>/
-  ├── SKILL.md           # Skill definition and protocol
+  ├── SKILL.md           # Skill definition with YAML frontmatter
   ├── references/        # Supporting documentation
   ├── scripts/          # Shell scripts for complex operations
   └── tests/            # Test scripts
 ```
 
+Each `SKILL.md` contains:
+
+- YAML `frontmatter` (`name`, `description`)
+- `GOAL` and `WHEN` sections
+- Efficiency directives (batching, parallel execution, token
+  optimization)
+- Workflow (step-by-step with status handling)
+- Output (files modified, status communication with
+  `SUCCESS`/`WARN`/`ERROR`)
+
 ### Key orchestration patterns
 
-**Git commit workflow** (`git-commit`):
+All orchestrator skills follow the patterns from
+`docs/skill-reference-guide.md`:
 
-- Orchestrates atomic commits by coordinating `git-add`, `git-message`,
-  and `git-status` skills
-- Each sub-skill provides reusable functionality focused on a single
-  responsibility
-- Automatically loops through commits until repository becomes clean
+**Sequential orchestration with looping** (`git-commit`):
+
+- Pattern: Fixed order, status capture, automatic loop control
+- Coordinates `git-add`, `git-message`, and `git-status` skills in
+  sequence
+- Each sub-skill provides single-responsibility, reusable functionality
+- Automatically loops until repository becomes clean (no user prompt
+  needed)
 - Requires user approval for each commit message via `git-message` skill
 - See: `skills/git-commit/SKILL.md:20-69`
 
-**Changelog workflow** (`update-changelog`):
+**Conditional orchestration with branching** (`update-changelog`):
 
+- Pattern: Dependencies, optional steps, smart initialization
 - Orchestrates `init-changelog`, `edit-changelog`, and
   `cleanup-changelog` skills
-- Uses conditional logic based on script status codes (`SUCCESS`,
-  `WARN`, `ERROR`)
+- Uses status codes for conditional logic (skip cleanup if `WARN`, halt
+  on `ERROR`)
+- Smart initialization: creates `CHANGELOG.md` only if missing
 - Tracks processed commits via `.last-aggregated-commit` pointer file
-- Smart initialization: ≤100 commits processes full history, >100
-  commits processes recent 100
+- Initialization strategy: ≤100 commits processes full history, >100
+  commits uses recent 100
 - See: `skills/update-changelog/SKILL.md`
 
 ## Development commands
@@ -96,18 +113,32 @@ tests directly:
 bash skills/<skill-name>/tests/test-<script-name>.sh
 ```
 
+### Creating new skills
+
+Use `skills/new-agent-skill/SKILL.md` as a template when creating new
+skills. This template provides the standard structure and sections
+expected in all skills.
+
 ## Important script conventions
+
+All scripts and skills follow the standardized conventions from
+`docs/skill-reference-guide.md`.
 
 ### Status codes
 
-Scripts use three-level status codes:
+**All skills** output status on the first line using the three-level
+protocol:
 
-- `SUCCESS`: Operation completed with changes
-- `WARN`: Operation completed but no changes needed
-- `ERROR`: Operation failed
+- `SUCCESS`: Operation completed with changes (exit code 0)
+- `WARN`: Operation completed but no changes needed (exit code 0)
+- `ERROR`: Operation failed (exit code 1)
 
-Status appears on the first line of script output. Orchestrator skills
-use these codes for conditional workflow logic.
+Extended domain-specific codes include: `APPROVED`,
+`REJECTED_EDIT_FILES`, `REJECTED_REGENERATE`, `REJECTED_ABORT` (used by
+`git-message`).
+
+Orchestrator skills capture and handle these status codes for
+conditional workflow logic.
 
 ### Changelog scripts
 
@@ -154,27 +185,36 @@ Never use `git add .` or `git add -A` - always stage files explicitly.
 
 ## Skill development guidelines
 
+**All skills follow a standardized structure** according to
+`docs/skill-reference-guide.md`, which provides the authoritative
+reference guide for creating and updating agent skills.
+
+The reference guide defines:
+
+- **Core protocol**: Three-level status codes (`SUCCESS`, `WARN`,
+  `ERROR`) with optional extended codes
+- **Skill structure templates**: Complete templates for YAML
+  `frontmatter`, sections, and formatting
+- **Orchestration patterns**: Linear, sequential (looping), and
+  conditional (branching)
+- **Scripting standards**: `POSIX` compliance, portability requirements,
+  best practices
+- **Anti-patterns**: Seven strict prohibitions including monolithic
+  skills, implicit dependencies, and silent failures
+
 When creating or modifying skills:
 
-1. **`SKILL.md` format**: Use YAML `frontmatter` with `name` and
-   `description` fields
-2. **Clear protocols**: Define Goal, When, Workflow, and directives (see
-   `skills/git-commit/SKILL.md` for reference)
-3. **Required sections**:
-   - `GOAL`: What the skill accomplishes
-   - `WHEN`: When to invoke the skill
-   - `Workflow`: Step-by-step execution with status handling
-   - `Directives`: Primary rules, git-specific commands, efficiency
-     requirements
-   - `Task Management`: When to use `todo` system
-   - `Output`: Files modified and status format
-4. **Efficiency directives**: All skills emphasize batch processing,
-   parallel operations, and token optimization
-5. **References**: Place supporting documentation in `references/`
-   folder (see existing skills for examples)
-6. **Scripts**: Use scripts for complex logic with low prompt efficiency
-   (rationale: reduces token usage, improves reproducibility)
-7. **Tests**: Provide test scripts in `tests/` subdirectory for
+1. **Follow the reference guide**: Use `docs/skill-reference-guide.md`
+   templates and patterns
+2. **Use skill template**: Start with `skills/new-agent-skill/SKILL.md`
+   as a base
+3. **Study existing skills**: Reference `skills/git-commit/SKILL.md` and
+   `skills/update-changelog/SKILL.md` for orchestration examples
+4. **Add references**: Place supporting documentation in `references/`
+   folder when needed
+5. **Write scripts**: Use shell scripts for complex logic to reduce
+   token usage and improve reproducibility
+6. **Include tests**: Provide test scripts in `tests/` subdirectory for
    validation
 
 ## Configuration files
@@ -187,7 +227,7 @@ When creating or modifying skills:
 - `settings.json`: Skills feature flag (requires `previewFeatures: true`
   and `experimental.skills: true`)
   - Install in `~/.gemini/settings.json` for Gemini CLI
-  - Install in `~/.claudie/settings.json` for Claude Code
+  - Install in `~/.claude/settings.json` for Claude Code
 - `.beads/`: Beads tool integration (version control and interaction
   tracking)
 
@@ -220,16 +260,21 @@ When creating or modifying skills:
 
 ## Important architecture patterns
 
+All skills follow the patterns defined in
+`docs/skill-reference-guide.md`:
+
 ### Status code protocol
 
-All scripts use three-level status codes on the first line of output:
+First-line status output enables orchestrator skills to make intelligent
+decisions:
 
-- `SUCCESS`: Operation completed with changes
-- `WARN`: Operation completed but no changes needed
-- `ERROR`: Operation failed
+- `SUCCESS`: Operation completed with changes → proceed to next step
+- `WARN`: Operation completed but no changes needed → skip optional
+  steps
+- `ERROR`: Operation failed → halt immediately
 
-Orchestrator skills use these codes for conditional workflow logic (see
-`git-commit` and `update-changelog`).
+See `git-commit` and `update-changelog` for orchestration examples using
+status codes.
 
 ### State management
 
