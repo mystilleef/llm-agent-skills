@@ -85,11 +85,6 @@ git status --porcelain=v2 --branch
 - Use parallel execution when possible
 - Reduce token usage
 
-## Task management
-
-For complex tasks: use `todo` system to break down, plan, and optimize
-workflow.
-
 ---
 
 ## Workflow

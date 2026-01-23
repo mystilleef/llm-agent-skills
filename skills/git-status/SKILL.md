@@ -24,11 +24,6 @@ to display the status of the repository to the user.
 - Target only relevant files
 - Reduce token usage
 
-## Task management
-
-For complex tasks: use `todo` system to break down, plan, and optimize
-workflow.
-
 ## Git directives
 
 ### For repository status
@@ -52,6 +47,5 @@ The following reference files serve as strict guidelines:
 `git-status` skill here._
 
 - Without using the `git-status` skill, get repository status
-- Study the reference files
-- Present final status to user
+- Use the reference files templates to present final status to user
 - **`DONE`**

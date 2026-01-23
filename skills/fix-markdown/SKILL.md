@@ -66,11 +66,6 @@ Locate the reference files in the `references` folder.
 - Target only requested files
 - Reduce token usage in all operations
 
-## Task management
-
-For complex tasks: use `todo` system to break down, plan, and optimize
-workflow.
-
 ## Workflow
 
 - Run `vale sync` to update lint rules

@@ -71,11 +71,6 @@ git add <file1> <file2> ...
   files; omit ignored files
 - Reduce token usage
 
-## Task management
-
-For complex tasks: use `todo` system to break down, plan, and optimize
-workflow.
-
 ---
 
 ## Workflow

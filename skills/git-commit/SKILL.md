@@ -24,7 +24,7 @@ Follow these steps in sequence:
 
 ### Step 1: Stage atomic changes
 
-- Invoke the `git-add` skill to stage a cohesive set of files.
+- Invoke the `git-add` skill.
 - Capture the status from skill output (`SUCCESS`, `WARN`, or `ERROR`).
 - Handle the status:
   - If `ERROR`: Halt and report the error to the user.
@@ -33,7 +33,7 @@ Follow these steps in sequence:
 
 ### Step 2: Generate commit message and await approval
 
-- Invoke the `git-message` skill to generate a commit message.
+- Invoke the `git-message` skill.
 - Capture the status from skill output (`APPROVED`,
   `REJECTED_EDIT_FILES`, `REJECTED_REGENERATE`, `REJECTED_ABORT`, or
   `ERROR`).
@@ -64,18 +64,13 @@ Follow these steps in sequence:
 
 ### Step 5: Present final status
 
-- Invoke the `git-status` skill to present repository state.
+- Invoke the `git-status` skill.
 - **`DONE`**
 
 ## Efficiency directives
 
-- Optimize all operations for token and context efficiency
+- Optimize all operations for agent, token, and context efficiency
 - Batch operations on file groups, avoid individual file processing
 - Use parallel execution when possible
 - Target only relevant files
 - Reduce token usage
-
-## Task management
-
-For complex tasks: use `todo` system to break down, plan, and optimize
-workflow.
