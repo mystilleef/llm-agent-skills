@@ -34,12 +34,10 @@ git status --porcelain=v2 --branch
 
 ## References
 
-The following reference files serve as strict guidelines:
+The following reference file serves as a strict guideline:
 
-- **`references/git-status-codes.md`**: complete reference for parsing
-  git status output
-- **`references/git-status-presentation.md`**: git status presentation
-  guidelines, examples, and templates
+- **`references/git-status-unified.md`**: unified reference for parsing
+  git status output and presentation guidelines
 
 ## Workflow
 
